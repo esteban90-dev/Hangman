@@ -2,10 +2,10 @@ class Game
   attr_reader :player, :dictionary, :secret
 
   def initialize(args)
-    @player = args["player"]
-    @stick_figure = args["stick_figure"]
-    @dictionary = args["dictionary"]
-    @secret = create_secret
+    @player = args.fetch("player")
+    @stick_figure = args.fetch("stick_figure")
+    @dictionary = args.fetch("dictionary")
+    @secret = args.fetch("secret", "")
   end
 
   public
@@ -22,10 +22,11 @@ class Game
      you will be hanged!"
   end
 
-  def prompt_player
+  def solicit_guess
     loop do
       puts "Please enter a new letter."
-      break if good_input?(gets.chomp)
+      input = gets.chomp
+      break if good_input?(input)
     end
   end
 
