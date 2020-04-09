@@ -1,13 +1,13 @@
 class Player
-  attr_accessor :guess
+  attr_reader :guess
 
   def initialize
-    @guess = ""
+    @guess = []
+  end
+
+  public
+
+  def make_guess(input)
+    self.guess.push(input)
   end
 end
-
-
-player1 = Player.new
-puts "enter guess"
-player1.guess = gets.chomp
-puts "player1 guess is #{player1.guess}"
