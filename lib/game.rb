@@ -23,10 +23,15 @@ class Game
   end
 
   def solicit_guess
+    input = get_user_input
+    player.make_guess(input)
+  end
+
+  def get_user_input
     loop do
       puts "Please enter a new letter."
       input = gets.chomp
-      break if good_input?(input)
+      return input if good_input?(input)
     end
   end
 
