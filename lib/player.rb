@@ -10,4 +10,13 @@ class Player
   def make_guess(input)
     self.guess.push(input)
   end
+
+  def current_guess
+    guess[-1]
+  end
+
+  def all_guesses
+    guess
+  end
+  
 end
