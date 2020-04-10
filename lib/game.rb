@@ -1,11 +1,12 @@
 class Game
-  attr_reader :player, :dictionary, :secret
+  attr_reader :player, :dictionary, :secret, :judged_guess
 
   def initialize(args)
     @player = args.fetch("player")
     @stick_figure = args.fetch("stick_figure")
     @dictionary = args.fetch("dictionary")
-    @secret = args.fetch("secret", "")
+    @secret = args.fetch("secret", create_secret)
+    @judged_guess = ""
   end
 
   public
@@ -20,6 +21,15 @@ class Game
      by guessing letters. If too many letters 
      which do not appear in the word are guessed, 
      you will be hanged!"
+  end
+
+  def judge_guess
+    #increase incorrect_guesses unless good_guess?
+    #unmask_secret if good_guess?
+  end
+
+  def good_guess?
+    secret.include?(player.current_guess)
   end
 
   def solicit_guess
@@ -42,7 +52,7 @@ class Game
   end
 
   def already_guessed?(input)
-    player.guess.include?(input)
+    player.all_guesses.include?(input)
   end
 
 end
