@@ -33,6 +33,20 @@ class Game
     self.unmasked_secret = secret.gsub(/[^#{player.current_guess}]/,"_")
   end
 
+  def game_over?
+    return true if winner?
+    return true if loser?
+    false
+  end
+
+  def winner?
+    unmasked_secret == secret
+  end
+
+  def loser?
+    incorrect_guesses == 7
+  end
+
   def good_guess?
     secret.include?(player.current_guess)
   end
