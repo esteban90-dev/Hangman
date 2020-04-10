@@ -1,12 +1,14 @@
 class Game
-  attr_reader :player, :dictionary, :secret, :judged_guess
+  attr_reader :player, :dictionary, :secret
+  attr_accessor :unmasked_secret, :incorrect_guesses
 
   def initialize(args)
     @player = args.fetch("player")
     @stick_figure = args.fetch("stick_figure")
     @dictionary = args.fetch("dictionary")
     @secret = args.fetch("secret", create_secret)
-    @judged_guess = ""
+    @unmasked_secret = ""
+    @incorrect_guesses = 0
   end
 
   public
@@ -24,8 +26,11 @@ class Game
   end
 
   def judge_guess
-    #increase incorrect_guesses unless good_guess?
-    #unmask_secret if good_guess?
+    self.incorrect_guesses += 1 unless good_guess?
+  end
+
+  def unmask_secret
+    self.unmasked_secret = secret.gsub(/[^#{player.current_guess}]/,"_")
   end
 
   def good_guess?
