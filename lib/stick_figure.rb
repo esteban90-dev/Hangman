@@ -9,6 +9,7 @@ class StickFigure
   public
 
   def display
+    puts "             "
     puts "    _________"
     puts "   |         |"
     puts "   |         |"
@@ -19,6 +20,7 @@ class StickFigure
     puts "             |"
     puts "           _____"
     puts "          /     \\"
+    puts "                  "
   end
 
   def set_body_parts(body_parts)
