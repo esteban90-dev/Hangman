@@ -1,5 +1,5 @@
 class Game
-  attr_reader :player, :dictionary, :secret
+  attr_reader :player, :stick_figure, :dictionary, :secret
   attr_accessor :unmasked_secret, :incorrect_guesses
 
   def initialize(args)
@@ -12,6 +12,27 @@ class Game
   end
 
   public
+
+  def play
+    puts welcome
+    create_secret
+    game_loop
+    puts result
+  end
+
+  private
+
+  def game_loop
+    loop do
+      solicit_guess
+      judge_guess
+      unmask_secret
+      stick_figure.set_body_parts(incorrect_guesses)
+      stick_figure.display
+      puts unmasked_secret
+      break if game_over?
+    end
+  end
   
   def create_secret
     dictionary.random_word
@@ -30,7 +51,7 @@ class Game
   end
 
   def unmask_secret
-    self.unmasked_secret = secret.gsub(/[^#{player.current_guess}]/,"_")
+    self.unmasked_secret = secret.gsub(/[^#{player.all_guesses.join}]/,"_")
   end
 
   def game_over?
@@ -53,7 +74,7 @@ class Game
 
   def result
     return "You won the game!" if winner?
-    return "You've been hanged!" if loser?
+    return "You've been hanged! The secret word was #{secret}" if loser?
   end
 
   def solicit_guess
