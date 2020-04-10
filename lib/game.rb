@@ -51,6 +51,11 @@ class Game
     secret.include?(player.current_guess)
   end
 
+  def result
+    return "You won the game!" if winner?
+    return "You've been hanged!" if loser?
+  end
+
   def solicit_guess
     input = get_user_input
     player.make_guess(input)
