@@ -1,13 +1,11 @@
 class Game
   attr_reader :player, :stick_figure, :dictionary, :secret
-  attr_accessor :incorrect_guesses 
 
   def initialize(args)
     @player = args.fetch("player")
     @stick_figure = args.fetch("stick_figure")
     @dictionary = args.fetch("dictionary")
     @secret = args.fetch("secret", create_secret)
-    @incorrect_guesses = 0
   end
 
   public
@@ -24,8 +22,7 @@ class Game
   def game_loop
     loop do
       solicit_guess
-      judge_guess
-      stick_figure.set_body_parts(incorrect_guesses)
+      stick_figure.set_body_parts(bad_guesses)
       stick_figure.display
       puts "\s\s\s\s" + unmasked_secret
       break if game_over?
@@ -42,8 +39,8 @@ class Game
     If too many letters which do not appear in the word are guessed, you will be hanged!"
   end
 
-  def judge_guess
-    self.incorrect_guesses += 1 unless good_guess?
+  def bad_guesses
+    player.all_guesses.count{ |guess| !secret.include?(guess) }
   end
 
   def unmasked_secret
@@ -61,11 +58,7 @@ class Game
   end
 
   def loser?
-    incorrect_guesses == 7
-  end
-
-  def good_guess?
-    secret.include?(player.current_guess)
+    bad_guesses == 7
   end
 
   def result
