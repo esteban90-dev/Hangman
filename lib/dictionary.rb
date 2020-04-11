@@ -11,7 +11,7 @@ class Dictionary
     select_words_by_length[rand(0..select_words_by_length.length)]
   end
 
-  def select_words_by_length(range=(4..9))    #range is the default range of word lengths
+  def select_words_by_length(range=(4..9))    #4-9 is the default range of word lengths
     contents.select{ |word| (word.length >= range.first) && (word.length <= range.last) }
   end
 
