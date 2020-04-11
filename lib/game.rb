@@ -83,13 +83,13 @@ class Game
   def get_user_input
     loop do
       puts tab + "Please enter a new letter."
-      input = gets.chomp
+      input = gets.chomp.downcase
       return input if good_input?(input)
     end
   end
 
   def good_input?(input)
-    return false if input.length != 1
+    return false unless input.match?(/^[a-z]{1}$/)
     return false if already_guessed?(input)
     true
   end
