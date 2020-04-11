@@ -24,7 +24,8 @@ class Game
       solicit_guess
       stick_figure.set_body_parts(bad_guesses)
       stick_figure.display
-      puts "\s\s\s\s" + unmasked_secret
+      puts guess_history
+      puts tab + unmasked_secret
       break if game_over?
     end
   end
@@ -34,9 +35,17 @@ class Game
   end
 
   def welcome
-    "\n\s\s\s\sHangman is a simple word guessing game. 
+    tab + "Hangman is a simple word guessing game. 
     Try to figure out the unknown word by guessing letters. 
     If too many letters which do not appear in the word are guessed, you will be hanged!"
+  end
+
+  def tab
+    "\n\s\s\s\s"
+  end
+
+  def guess_history
+    tab + "already guessed letters: #{player.all_guesses.join(',')} \n "
   end
 
   def bad_guesses
@@ -62,8 +71,8 @@ class Game
   end
 
   def result
-    return "\s\s\s\sYou won the game!" if winner?
-    return "\s\s\s\sYou've been hanged! The secret word was #{secret}" if loser?
+    return tab + "You won the game!" if winner?
+    return tab + "You've been hanged! The secret word was #{secret}" if loser?
   end
 
   def solicit_guess
@@ -73,7 +82,7 @@ class Game
 
   def get_user_input
     loop do
-      puts "\n\s\s\s\sPlease enter a new letter."
+      puts tab + "Please enter a new letter."
       input = gets.chomp
       return input if good_input?(input)
     end
