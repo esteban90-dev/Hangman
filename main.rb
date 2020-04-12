@@ -2,11 +2,10 @@ require "./lib/game.rb"
 require "./lib/player.rb"
 require "./lib/stick_figure.rb"
 require "./lib/dictionary.rb"
-require "open-uri"
 
 player1 = Player.new
 stick1 = StickFigure.new
-dictionary1 = Dictionary.new
+dictionary1 = Dictionary.new("./for_reference/dictionary.txt")
 
 game1 = Game.new({
   "player" => player1,

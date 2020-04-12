@@ -1,9 +1,8 @@
 class Dictionary
   attr_reader :contents
 
-  #gets dictionary contents from url
-  def initialize(url="https://www.scrapmaker.com/data/wordlists/twelve-dicts/5desk.txt")
-    @contents = read_dictionary_file(url)
+  def initialize(path)
+    @contents = read_file(path)
   end
 
   public
@@ -18,8 +17,8 @@ class Dictionary
 
   private
 
-  def read_dictionary_file(url)
-    URI.open(url).read.split
+  def read_file(path)
+    File.open(path).readlines
   end
 
 end
