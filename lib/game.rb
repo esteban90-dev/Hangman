@@ -3,18 +3,10 @@ class Game
 
   attr_reader :player, :stick_figure, :dictionary, :secret
 
-  def initialize(args)
-    @player = args.fetch("player")
-    @stick_figure = args.fetch("stick_figure")
-    @dictionary = args.fetch("dictionary")
-    @secret = args.fetch("secret", create_secret)
-  end
-
-  public
-
   def self.load(fname)
     file = File.open(fname)
     load = YAML.load(file)
+    puts TAB + "Game Loaded."
     self.new(load)
   end
 
@@ -24,8 +16,21 @@ class Game
     If too many letters which do not appear in the word are guessed, you will be hanged!"
   end
 
+  def initialize(args)
+    @player = args.fetch("player")
+    @stick_figure = args.fetch("stick_figure")
+    @dictionary = args.fetch("dictionary")
+    @secret = args.fetch("secret", create_secret)
+  end
+
   def play
     create_secret
+    game_loop
+    puts result
+  end
+
+  def resume
+    update_display
     game_loop
     puts result
   end
@@ -47,14 +52,18 @@ class Game
 
   def game_loop
     loop do
-      prompt_save if not_first_round?
       solicit_guess
-      stick_figure.set_body_parts(bad_guesses)
-      stick_figure.display
-      puts guess_history
-      puts TAB + unmasked_secret
+      update_display
       break if game_over?
+      prompt_save if not_first_round?
     end
+  end
+
+  def update_display
+    stick_figure.set_body_parts(bad_guesses)
+    stick_figure.display
+    puts guess_history
+    puts TAB + unmasked_secret
   end
   
   def create_secret
