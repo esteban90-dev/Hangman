@@ -10,6 +10,12 @@ class Game
 
   public
 
+  def self.load(fname)
+    file = File.open(fname)
+    load = YAML.load(file)
+    self.new(load)
+  end
+
   def play
     puts welcome
     create_secret
@@ -27,19 +33,14 @@ class Game
       "secret" => secret
     })
     save_file.close
-  end
-
-  def self.load(fname)
-    file = File.open(fname)
-    load = YAML.load(file)
-    self.new(load)
+    puts tab + "Game saved."
   end
 
   private
 
   def game_loop
     loop do
-      prompt_save
+      prompt_save if not_first_round?
       solicit_guess
       stick_figure.set_body_parts(bad_guesses)
       stick_figure.display
@@ -104,20 +105,29 @@ class Game
   end
 
   def prompt_save
-    get_user_input("Would you like to save the game? type y/n.", /^[yn]{1}$/)
-    #save game
+    input = get_user_input("Would you like to save the game? type y/n.", /^[yn]{1}$/)
+    save("./saves/save_file.txt") if input == "y"
   end
 
-  def get_user_input(prompt_message, regexp)
+  def get_user_input(prompt_message, regexp) #uses regular expression to verify user input
     loop do
       puts tab + prompt_message
       input = gets.chomp.downcase
-      return input if input.match?(regexp)
+      #return input if input.match?(regexp)
+      if input.match?(regexp)
+        return input
+      else
+        puts tab + "Invalid input."
+      end
     end
   end
 
   def already_guessed?(input)
     player.all_guesses.include?(input)
+  end
+
+  def not_first_round?
+    player.all_guesses.length > 0
   end
 
 end
