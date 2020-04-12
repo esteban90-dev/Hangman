@@ -1,4 +1,6 @@
 class Game
+  TAB = "\n\s\s\s\s"
+
   attr_reader :player, :stick_figure, :dictionary, :secret
 
   def initialize(args)
@@ -16,8 +18,13 @@ class Game
     self.new(load)
   end
 
+  def self.welcome
+    TAB + "Hangman is a simple word guessing game. 
+    Try to figure out the unknown word by guessing letters. 
+    If too many letters which do not appear in the word are guessed, you will be hanged!"
+  end
+
   def play
-    puts welcome
     create_secret
     game_loop
     puts result
@@ -33,7 +40,7 @@ class Game
       "secret" => secret
     })
     save_file.close
-    puts tab + "Game saved."
+    puts TAB + "Game saved."
   end
 
   private
@@ -45,7 +52,7 @@ class Game
       stick_figure.set_body_parts(bad_guesses)
       stick_figure.display
       puts guess_history
-      puts tab + unmasked_secret
+      puts TAB + unmasked_secret
       break if game_over?
     end
   end
@@ -54,18 +61,8 @@ class Game
     dictionary.random_word
   end
 
-  def welcome
-    tab + "Hangman is a simple word guessing game. 
-    Try to figure out the unknown word by guessing letters. 
-    If too many letters which do not appear in the word are guessed, you will be hanged!"
-  end
-
-  def tab
-    "\n\s\s\s\s"
-  end
-
   def guess_history
-    tab + "already guessed letters: #{player.all_guesses.join(',')} \n "
+    TAB + "already guessed letters: #{player.all_guesses.join(',')} \n "
   end
 
   def bad_guesses
@@ -91,8 +88,8 @@ class Game
   end
 
   def result
-    return tab + "You won the game!" if winner?
-    return tab + "You've been hanged! The secret word was #{secret}" if loser?
+    return TAB + "You won the game!" if winner?
+    return TAB + "You've been hanged! The secret word was #{secret}" if loser?
   end
 
   def solicit_guess
@@ -111,12 +108,12 @@ class Game
 
   def get_user_input(prompt_message, regexp) #uses regular expression to verify user input
     loop do
-      puts tab + prompt_message
+      puts TAB + prompt_message
       input = gets.chomp.downcase
       if input.match?(regexp)
         return input
       else
-        puts tab + "Invalid input."
+        puts TAB + "Invalid input."
       end
     end
   end
