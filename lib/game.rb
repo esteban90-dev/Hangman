@@ -17,6 +17,24 @@ class Game
     puts result
   end
 
+  def save(fname)
+    #create save file in YAML format
+    save_file = File.open(fname, "w")
+    save_file.puts YAML.dump({
+      "player" => player,
+      "stick_figure" => stick_figure,
+      "dictionary" => dictionary,
+      "secret" => secret
+    })
+    save_file.close
+  end
+
+  def self.load(fname)
+    file = File.open(fname)
+    load = YAML.load(file)
+    self.new(load)
+  end
+
   private
 
   def game_loop
