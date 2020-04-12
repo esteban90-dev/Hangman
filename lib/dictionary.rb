@@ -18,7 +18,7 @@ class Dictionary
   private
 
   def read_file(path)
-    File.open(path).readlines
+    File.open(path).readlines.map{ |line| line.chomp }  #chomp removes '\r\n' from end of each word
   end
 
 end
