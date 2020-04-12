@@ -39,7 +39,7 @@ class Game
 
   def game_loop
     loop do
-      #prompt_save
+      prompt_save
       solicit_guess
       stick_figure.set_body_parts(bad_guesses)
       stick_figure.display
@@ -104,23 +104,17 @@ class Game
   end
 
   def prompt_save
-    #
+    get_user_input("Would you like to save the game? type y/n.", /^[yn]{1}$/)
+    #save game
   end
 
   def get_user_input(prompt_message, regexp)
     loop do
       puts tab + prompt_message
       input = gets.chomp.downcase
-      #return input if good_guess_input?(input, regex)
       return input if input.match?(regexp)
     end
   end
-
-  #def good_guess_input?(input)
-  #  return false unless input.match?(/^[a-z]{1}$/)
-  #  return false if already_guessed?(input)
-  #  true
-  #end
 
   def already_guessed?(input)
     player.all_guesses.include?(input)
