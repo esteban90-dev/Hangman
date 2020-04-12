@@ -39,6 +39,7 @@ class Game
 
   def game_loop
     loop do
+      #prompt_save
       solicit_guess
       stick_figure.set_body_parts(bad_guesses)
       stick_figure.display
@@ -94,23 +95,32 @@ class Game
   end
 
   def solicit_guess
-    input = get_user_input
+    input = ""
+    loop do
+      input = get_user_input("Please enter a new letter.", /^[a-z]{1}$/)
+      break unless already_guessed?(input)
+    end
     player.make_guess(input)
   end
 
-  def get_user_input
+  def prompt_save
+    #
+  end
+
+  def get_user_input(prompt_message, regexp)
     loop do
-      puts tab + "Please enter a new letter."
+      puts tab + prompt_message
       input = gets.chomp.downcase
-      return input if good_input?(input)
+      #return input if good_guess_input?(input, regex)
+      return input if input.match?(regexp)
     end
   end
 
-  def good_input?(input)
-    return false unless input.match?(/^[a-z]{1}$/)
-    return false if already_guessed?(input)
-    true
-  end
+  #def good_guess_input?(input)
+  #  return false unless input.match?(/^[a-z]{1}$/)
+  #  return false if already_guessed?(input)
+  #  true
+  #end
 
   def already_guessed?(input)
     player.all_guesses.include?(input)
