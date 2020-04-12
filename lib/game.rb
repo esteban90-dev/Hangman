@@ -95,27 +95,15 @@ class Game
   def solicit_guess
     input = ""
     loop do
-      input = get_user_input("Please enter a new letter.", /^[a-z]{1}$/)
+      input = UserInput.get_user_input("Please enter a new letter.", /^[a-z]{1}$/)
       break unless already_guessed?(input)
     end
     player.make_guess(input)
   end
 
   def prompt_save
-    input = get_user_input("Would you like to save the game? type y/n.", /^[yn]{1}$/)
+    input = UserInput.get_user_input("Would you like to save the game? type y/n.", /^[yn]{1}$/)
     save("./saves/save_file.txt") if input == "y"
-  end
-
-  def get_user_input(prompt_message, regexp) #uses regular expression to verify user input
-    loop do
-      puts TAB + prompt_message
-      input = gets.chomp.downcase
-      if input.match?(regexp)
-        return input
-      else
-        puts TAB + "Invalid input."
-      end
-    end
   end
 
   def already_guessed?(input)
