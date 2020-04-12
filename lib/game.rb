@@ -113,7 +113,6 @@ class Game
     loop do
       puts tab + prompt_message
       input = gets.chomp.downcase
-      #return input if input.match?(regexp)
       if input.match?(regexp)
         return input
       else
