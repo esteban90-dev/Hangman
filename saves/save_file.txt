@@ -1,0 +1,14 @@
+---
+player: !ruby/object:Player
+  guess:
+  - e
+stick_figure: !ruby/object:StickFigure
+  parts:
+  - " "
+  - " "
+  - " "
+  - " "
+  - " "
+  - " "
+  - " "
+secret: vitiate
