@@ -1,4 +1,4 @@
-require 'user_input.rb'
+require "user_input"
 
 class Game
   TAB = UserInput::TAB
@@ -23,12 +23,12 @@ class Game
   def initialize(args)
     @player = args.fetch("player")
     @stick_figure = args.fetch("stick_figure")
-    @dictionary = args.fetch("dictionary")
-    @secret = args.fetch("secret", create_secret)
+    #@dictionary = args.fetch("dictionary")
+    @secret = args.fetch("secret")
   end
 
   def play
-    create_secret
+    #create_secret
     game_loop
     puts result
   end
@@ -70,9 +70,9 @@ class Game
     puts TAB + unmasked_secret
   end
   
-  def create_secret
-    dictionary.random_word
-  end
+  #def create_secret
+  #  dictionary.random_word
+  #end
 
   def guess_history
     TAB + "already guessed letters: #{player.all_guesses.join(',')} \n "

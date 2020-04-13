@@ -1,11 +1,10 @@
-$LOAD_PATH << "."
-$LOAD_PATH << "./lib/"
+$LOAD_PATH << File.expand_path("./lib", File.dirname(__FILE__))
 
-require "game.rb"
-require "player.rb"
-require "stick_figure.rb"
-require "dictionary.rb"
-require "user_input.rb"
+require "game"
+require "player"
+require "stick_figure"
+require "dictionary"
+require "user_input"
 require 'yaml'
 
 puts Game.welcome
@@ -17,12 +16,12 @@ if input == 'y'
 else 
   player1 = Player.new
   stick1 = StickFigure.new
-  dictionary1 = Dictionary.new("./for_reference/dictionary.txt")
+  secret1 = Dictionary.new("./for_reference/dictionary.txt").random_word
 
   game1 = Game.new({
     "player" => player1,
     "stick_figure" => stick1,
-    "dictionary" => dictionary1
+    "secret" => secret1
   })
 
   game1.play
