@@ -8,7 +8,7 @@ class Dictionary
   public
 
   def random_word
-    select_words_by_length[rand(0..select_words_by_length.length)]
+    select_words_by_length[rand(0..select_words_by_length.length)].downcase
   end
 
   def select_words_by_length(range=(4..9))    #4-9 is the default range of word lengths
@@ -20,7 +20,6 @@ class Dictionary
   def read_file(path)
     File.open(path).readlines.map{ |line| line.chomp }  #chomp removes '\r\n' from end of each word
   end
-
 end
-  
+
   
