@@ -1,14 +1,15 @@
-require "./lib/game.rb"
-require "./lib/player.rb"
-require "./lib/stick_figure.rb"
-require "./lib/dictionary.rb"
-require "./lib/user_input.rb"
+$LOAD_PATH << "."
+$LOAD_PATH << "./lib/"
+
+require "game.rb"
+require "player.rb"
+require "stick_figure.rb"
+require "dictionary.rb"
+require "user_input.rb"
 require 'yaml'
 
-
-
 puts Game.welcome
-input = UserInput.get_user_input("Would you like to load a previous game? Enter y/n.", /^[yn]{1}$/)
+input = UserInput::get_user_input("Would you like to load a previous game? Enter y/n.", /^[yn]{1}$/)
 
 if input == 'y'
   game1 = Game.load("./saves/save_file.txt")

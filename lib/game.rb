@@ -1,5 +1,9 @@
+require 'user_input.rb'
+
 class Game
-  TAB = "\n\s\s\s\s"
+  TAB = UserInput::TAB
+
+  include UserInput
 
   attr_reader :player, :stick_figure, :dictionary, :secret
 
@@ -104,14 +108,14 @@ class Game
   def solicit_guess
     input = ""
     loop do
-      input = UserInput.get_user_input("Please enter a new letter.", /^[a-z]{1}$/)
+      input = get_user_input("Please enter a new letter.", /^[a-z]{1}$/)
       break unless already_guessed?(input)
     end
     player.make_guess(input)
   end
 
   def prompt_save
-    input = UserInput.get_user_input("Would you like to save the game? type y/n.", /^[yn]{1}$/)
+    input = get_user_input("Would you like to save the game? type y/n.", /^[yn]{1}$/)
     save("./saves/save_file.txt") if input == "y"
   end
 
